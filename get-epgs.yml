@@ -1,5 +1,7 @@
 - name: Hello World Sample
   hosts: all
+  vars:
+    - ansible_connection: local
   tasks:
     - name: Hello Message
       debug:
@@ -8,4 +10,7 @@
     - name: Get EPGs from ACI
       aci_epg:
         hostname: "{{ inventory_hostname }}"
+        username: robot-ro
+        password: c1sco.123
+        use_ssl: False
         state: query
