@@ -1,0 +1,19 @@
+- name: Get Facts Cisco Nexus
+  hosts: nexus
+  vars:
+    - ansible_connection: local
+  gather_facts: no
+  tasks:
+    - name: Hello Message
+      debug:
+        msg: "Hello World!"
+
+    - name: Get facts
+      nxos_facts:
+        gather_subset: all
+        host: "{{ inventory_hostname }}"
+      register: nxos_facts
+
+    - name: dump facts
+      debug:
+        var: nxos_facts

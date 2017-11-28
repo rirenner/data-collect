@@ -1,0 +1,21 @@
+
+- name: Get Facts Cisco Nexus
+  hosts: nexus
+  vars:
+    - ansible_connection: local
+  gather_facts: no
+
+  tasks:
+
+    - name: Get arp table xml
+      nxos_command:
+        commands:
+          - command: "show ip arp | xml"
+        host: "{{ inventory_hostname }}"
+      register: arp_table
+
+    - name: write arp output
+      template:
+        src: arp.j2
+        dest: /tmp/arp.netconf_xml
+      delegate_to: 127.0.0.1
